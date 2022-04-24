@@ -133,7 +133,7 @@
     margin: 0.5rem 0;
 	}
   h1 > i {
-    font-size: 2rem;
+    font-size: 1rem;
   }
   :global(body) {
     margin: 0;
