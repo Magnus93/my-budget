@@ -4,6 +4,13 @@
   let transactions: Record<string, any>[];
   let filteredTransactions: Record<string, any>[];
   let headers: string[];
+  const categories: {name: string, color?: string}[] = [
+    {name: "groceries", color: "#330033"},
+    {name: "resturant", color: "#330033"},
+    {name: "health", color: "#330033"},
+    {name: "furniture", color: "#330033"},
+    {name: "misc", color: "#330033"},
+  ]
 
   function handleFileSelected(event: any) {
     const files = event.target.files
@@ -55,8 +62,12 @@
 	  }}>
   </fieldset>
   <div>
-    <h2>CSV</h2>
-    <h2>Object</h2>
+    <h2>Transactions</h2>
+    <div>
+      {#each categories as g}
+        <span class="category">{g.name}</span>
+      {/each}
+    </div>
     <table>
       <thead>
         <tr>
@@ -81,7 +92,6 @@
         
       </thead>
     </table>
-    <pre>{JSON.stringify(transactions, undefined, 2)}</pre>
   </div>
 </main>
 
@@ -93,7 +103,7 @@
 	}
   main > div {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    /* grid-template-columns: 3fr 1fr; */
   }
   input[type="text"] {
     max-width: 10rem;
@@ -107,7 +117,12 @@
   tr:hover {
     outline: 1px solid blue;
   }
-
+  .category {
+    padding: 0.25em 0.75em;
+    margin: 0 0.5em;
+    outline: 1px solid black;
+    border-radius: 1rem;
+  }
 	h1 {
 		color: #ff3e00;
 		font-size: 2rem;
