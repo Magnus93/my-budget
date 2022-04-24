@@ -5,11 +5,11 @@
   let filteredTransactions: Record<string, any>[];
   let headers: string[];
   const categories: {name: string, color?: string}[] = [
-    {name: "groceries", color: "#330033"},
-    {name: "resturant", color: "#330033"},
-    {name: "health", color: "#330033"},
-    {name: "furniture", color: "#330033"},
-    {name: "misc", color: "#330033"},
+    {name: "groceries", color: "blue"},
+    {name: "resturant", color: "red"},
+    {name: "health", color: "green"},
+    {name: "furniture", color: "purple"},
+    {name: "misc", color: "teal"},
   ]
 
   function handleFileSelected(event: any) {
@@ -63,9 +63,10 @@
   </fieldset>
   <div>
     <h2>Transactions</h2>
-    <div>
+    <div class="categories">
+      Add selection to:
       {#each categories as g}
-        <span class="category">{g.name}</span>
+        <span class={"category " + g.color} name={g.name}>{g.name}</span>
       {/each}
     </div>
     <table>
@@ -106,7 +107,7 @@
     /* grid-template-columns: 3fr 1fr; */
   }
   input[type="text"] {
-    max-width: 10rem;
+    width: 100%;
   }
   table {
     height: min-content;
@@ -114,14 +115,16 @@
   tr:nth-child(2n) {
     background-color: aliceblue;
   }
-  tr:hover {
+  tr:not(:first-child):hover {
     outline: 1px solid blue;
+  }
+  .categories {
+    padding: 1rem 0;
   }
   .category {
     padding: 0.25em 0.75em;
     margin: 0 0.5em;
-    outline: 1px solid black;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
   }
 	h1 {
 		color: #ff3e00;
@@ -135,6 +138,27 @@
   :global(body) {
     margin: 0;
     padding: 0;
+  }
+  .red, .blue, .orange, .green, .purple, .teal {
+    color: white;
+  }
+  .red {
+    background-color: #761f1f;
+  }
+  .blue {
+    background-color: #1f3076;
+  }
+  .orange {
+    background-color: #7e4f19;
+  }
+  .green {
+    background-color: #28761f;
+  }
+  .purple {
+    background-color: #6c1f76;
+  }
+  .teal {
+    background-color: #1f7276;
   }
 
 	@media (min-width: 640px) {
