@@ -30,7 +30,7 @@
   }
 </script>
 
-<main>
+<div id="root">
   <header>
     <h1>{name}<i>(Magnus and Yash's Budget)</i></h1>
     <nav>
@@ -56,10 +56,12 @@
       </ul>
     </nav>
   </header>
-  {#if tabValue == "upload"}<Upload on:upload={uploadHander} />{/if}
-  {#if tabValue == "edit"}<Edit {transactions} {headers} {categories} />{/if}
-  {#if tabValue == "present"}<div>Present</div>{/if}
-</main>
+  <main>
+    {#if tabValue == "upload"}<Upload on:upload={uploadHander} />{/if}
+    {#if tabValue == "edit"}<Edit {transactions} {headers} {categories} />{/if}
+    {#if tabValue == "present"}<div>Present</div>{/if}
+  </main>
+</div>
 
 <style type="text/scss">
   header {
