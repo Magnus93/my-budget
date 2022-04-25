@@ -71,7 +71,6 @@
   }
   main {
     padding: 1em;
-    max-width: 240px;
     margin: 0 auto;
   }
   main > div {
@@ -89,31 +88,21 @@
         border-radius: 0.5rem;
         cursor: pointer;
         &:hover {
-          outline: 2px solid red;
+          background-color: RGB(var(--hover-color));
         }
         &.selected-tab {
-          outline: 2px solid pink;
+          background-color: RGB(var(--accent-color));
         }
       }
     }
   }
   h1 {
-    color: #ff3e00;
+    color: RGB(var(--text-color));
     font-size: 2rem;
     font-weight: 200;
     margin: 0.5rem 0;
   }
   h1 > i {
     font-size: 1rem;
-  }
-  :global(body) {
-    margin: 0;
-    padding: 0;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
   }
 </style>

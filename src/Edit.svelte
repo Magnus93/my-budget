@@ -50,7 +50,7 @@
   </table>
 </div>
 
-<style>
+<style type="text/scss">
   input[type="text"] {
     width: 100%;
   }
@@ -58,10 +58,10 @@
     height: min-content;
   }
   tr:nth-child(2n) {
-    background-color: aliceblue;
+    background-color: RGB(var(--shade-color));
   }
   tr:not(:first-child):hover {
-    outline: 1px solid blue;
+    background-color: RGB(var(--hover-color));
   }
   .categories {
     padding: 1rem 0;

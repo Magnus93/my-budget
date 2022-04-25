@@ -36,16 +36,14 @@
   }
 </script>
 
-<fieldset>
-  <legend>Upload CSV</legend>
-  <input
-    type="file"
-    id="budget-file"
-    name="filename"
-    accept=".csv"
-    on:change={(e) => {
-      console.log(e);
-      handleFileSelected(e);
-    }}
-  />
-</fieldset>
+<h2>Upload CSV</h2>
+<input
+  type="file"
+  id="budget-file"
+  name="filename"
+  accept=".csv"
+  on:change={(e) => {
+    console.log(e);
+    handleFileSelected(e);
+  }}
+/>
