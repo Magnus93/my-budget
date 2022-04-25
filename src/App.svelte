@@ -20,7 +20,7 @@
   ];
   function uploadHander(
     event: CustomEvent<{
-      transactions: Record<string, any>[];
+      transactions: (Record<string, any> & {category?: string})[];
       headers: string[];
     }>
   ) {
@@ -32,7 +32,7 @@
 
 <div id="root">
   <header>
-    <h1>{name}<i>(Magnus and Yash's Budget)</i></h1>
+    <h1>{name+" "}<i>(Magnus and Yash's Budget)</i></h1>
     <nav>
       <ul>
         <li
@@ -73,25 +73,27 @@
     padding: 1em;
     margin: 0 auto;
   }
-  main > div {
-    display: grid;
-    /* grid-template-columns: 3fr 1fr; */
-  }
-  nav {
+  header {
+    background-color: RGB(var(--shade-color));
+    padding: 0.5rem 0;
     display: flex;
-    & > ul {
-      display: contents;
-      & > li {
-        display: block;
-        padding: 0.75rem 1.25rem;
-        margin: 0 0.25rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        &:hover {
-          background-color: RGB(var(--hover-color));
-        }
-        &.selected-tab {
-          background-color: RGB(var(--accent-color));
+    align-items: center;
+    nav {
+      display: flex;
+      & > ul {
+        display: contents;
+        & > li {
+          display: block;
+          padding: 0.75rem 1.25rem;
+          margin: 0 0.25rem;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          &:hover {
+            background-color: RGB(var(--hover-color));
+          }
+          &.selected-tab {
+            background-color: RGB(var(--accent-color));
+          }
         }
       }
     }

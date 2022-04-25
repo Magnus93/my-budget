@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Category from "./Category.svelte";
   export let headers: string[] | undefined = undefined;
   export let categories: {name: string, color?: string}[] | undefined = undefined;
   export let transactions: Record<string, any>[] | undefined = undefined;
@@ -22,12 +23,13 @@
   <div class="categories">
     Add selection to:
     {#each categories ?? [] as g}
-      <span class={"category " + g.color} name={g.name}>{g.name}</span>
+      <Category value={g}></Category>
     {/each}
   </div>
   <table>
     <thead>
       <tr>
+        <th></th>
         {#each headers ?? [] as h}
           <th>
             <input type="text" name={h} on:input={handleFilterEvent} />
@@ -35,12 +37,14 @@
         {/each}
       </tr>
       <tr>
+        <th>Category</th>
         {#each headers ?? [] as h}
           <th>{h}</th>
         {/each}
       </tr>
       {#each filteredTransactions ?? [] as o}
         <tr>
+          <td>{o.category ?? ""}</td>
           {#each headers ?? [] as h}
             <td>{o[h]}</td>
           {/each}
@@ -56,40 +60,19 @@
   }
   table {
     height: min-content;
-  }
-  tr:nth-child(2n) {
-    background-color: RGB(var(--shade-color));
-  }
-  tr:not(:first-child):hover {
-    background-color: RGB(var(--hover-color));
+    border-collapse: collapse;
+
+    td, th {
+      padding: 0.5rem 0.75rem;
+    }
+    tr:nth-child(2n) {
+      background-color: RGB(var(--shade-color));
+    }
+    tr:not(:first-child):hover {
+      background-color: RGB(var(--hover-color));
+    }
   }
   .categories {
     padding: 1rem 0;
-  }
-  .category {
-    padding: 0.25em 0.75em;
-    margin: 0 0.5em;
-    border-radius: 0.5rem;
-  }
-  .red, .blue, .orange, .green, .purple, .teal {
-    color: white;
-  }
-  .red {
-    background-color: #761f1f;
-  }
-  .blue {
-    background-color: #1f3076;
-  }
-  .orange {
-    background-color: #7e4f19;
-  }
-  .green {
-    background-color: #28761f;
-  }
-  .purple {
-    background-color: #6c1f76;
-  }
-  .teal {
-    background-color: #1f7276;
   }
 </style>
