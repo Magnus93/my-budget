@@ -18,7 +18,6 @@
 </script>
 
 <div>
-  {transactions?.length}
   <h2>Edit Transactions</h2>
   <div class="categories">
     Add selection to:
