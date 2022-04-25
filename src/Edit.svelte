@@ -1,4 +1,5 @@
 <script lang="ts">
+  import CategorySelector from "./CategorySelector.svelte";
   import Category from "./Category.svelte";
   export let headers: string[] | undefined = undefined;
   export let categories: {name: string, color?: string}[] | undefined = undefined;
@@ -21,7 +22,6 @@
 <div>
   <h2>Edit Transactions</h2>
   <div class="categories">
-    Add selection to:
     {#each categories ?? [] as g}
       <Category value={g}></Category>
     {/each}
@@ -29,7 +29,7 @@
   <table>
     <thead>
       <tr>
-        <th></th>
+        <th><CategorySelector {categories}></CategorySelector><button>+</button></th>
         {#each headers ?? [] as h}
           <th>
             <input type="text" name={h} on:input={handleFilterEvent} />
