@@ -1,8 +1,9 @@
 <script lang="ts">
-  import CategorySelector from "./CategorySelector.svelte";
-  import Category from "./Category.svelte";
+  import {Category} from "../model";
+  import MyCategorySelector from "./MyCategorySelector.svelte";
+  import MyCategory from "./MyCategory.svelte";
   export let headers: string[] | undefined = undefined;
-  export let categories: {name: string, color?: string}[] | undefined = undefined;
+  export let categories: Category[] | undefined = undefined;
   export let transactions: Record<string, any>[] | undefined = undefined;
   let filteredTransactions: Record<string, any>[] | undefined;
 
@@ -14,7 +15,6 @@
     console.log(e.target)
     const property = (e.target as HTMLInputElement)?.getAttribute("name")
     const search = (e.target as HTMLInputElement).value
-    console.log(search)
     filteredTransactions = transactions.filter(t => RegExp(search, "i").test(t[property]))
   }
 </script>
@@ -22,14 +22,14 @@
 <div>
   <h2>Edit Transactions</h2>
   <div class="categories">
-    {#each categories ?? [] as g}
-      <Category value={g}></Category>
+    {#each Category.types as c}
+      <MyCategory value={c}></MyCategory>
     {/each}
   </div>
   <table>
     <thead>
       <tr>
-        <th><CategorySelector {categories}></CategorySelector><button>+</button></th>
+        <th><MyCategorySelector></MyCategorySelector><button>+</button></th>
         {#each headers ?? [] as h}
           <th>
             <input type="text" name={h} on:input={handleFilterEvent} />
@@ -55,13 +55,12 @@
 </div>
 
 <style type="text/scss">
-  input[type="text"] {
+  input[type=text] {
     width: 100%;
   }
   table {
     height: min-content;
     border-collapse: collapse;
-
     td, th {
       padding: 0.5rem 0.75rem;
     }

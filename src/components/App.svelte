@@ -1,7 +1,7 @@
 <script lang="ts">
   import { writable } from "svelte/store";
-  import Edit from "./Edit.svelte";
-  import Upload from "./Upload.svelte";
+  import MyEdit from "./MyEdit.svelte";
+  import MyUpload from "./MyUpload.svelte";
   export let name: string;
   let transactions: Record<string, any>[];
   let headers: string[];
@@ -11,13 +11,6 @@
     tabValue = value;
     console.log;
   });
-  const categories: { name: string; color?: string }[] = [
-    { name: "groceries", color: "blue" },
-    { name: "resturant", color: "red" },
-    { name: "health", color: "green" },
-    { name: "furniture", color: "purple" },
-    { name: "misc", color: "teal" },
-  ];
   function uploadHander(
     event: CustomEvent<{
       transactions: (Record<string, any> & {category?: string})[];
@@ -57,8 +50,8 @@
     </nav>
   </header>
   <main>
-    {#if tabValue == "upload"}<Upload on:upload={uploadHander} />{/if}
-    {#if tabValue == "edit"}<Edit {transactions} {headers} {categories} />{/if}
+    {#if tabValue == "upload"}<MyUpload on:upload={uploadHander} />{/if}
+    {#if tabValue == "edit"}<MyEdit {transactions} {headers} />{/if}
     {#if tabValue == "present"}<div>Present</div>{/if}
   </main>
 </div>

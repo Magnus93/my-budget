@@ -1,8 +1,19 @@
 <script lang="ts">
-  export let value: { name: string; color?: string } | undefined = undefined;
+  import type { Category } from "../model";
+  export let value: Category | undefined = undefined;
+  let color: string | undefined
+  $: {
+    color = {
+      groceries: "blue",
+      resturant: "red",
+      health: "green",
+      furniture: "purple",
+      misc: "teal",
+    }[value]
+  }
 </script>
 
-<span class={"category " + value.color} name={value.name}>{value.name}</span>
+<span class={"category " + color} name={value}>{value}</span>
 
 <style lang="scss">
   .category {
