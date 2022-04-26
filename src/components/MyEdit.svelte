@@ -65,7 +65,11 @@
         <tr>
           <td></td>
           {#each headers ?? [] as h}
-            <td>Footer</td>
+            <td>
+              {#if headerTypes[h] == "number"}
+                {filteredTransactions.reduce((r, c) => r + (typeof c[h] == "number" ? +c[h] : 0), 0)}
+              {/if}
+            </td>
           {/each}
         </tr>
       </tfoot>
