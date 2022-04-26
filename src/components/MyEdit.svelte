@@ -47,6 +47,7 @@
           <th>{h}</th>
         {/each}
       </tr>
+    </thead>
       {#each filteredTransactions ?? [] as o}
         <tr>
           <td><MyCategory value={o.category}/></td>
@@ -55,7 +56,14 @@
           {/each}
         </tr>
       {/each}
-    </thead>
+      <tfoot>
+        <tr>
+          <td></td>
+          {#each headers ?? [] as h}
+            <td>Footer</td>
+          {/each}
+        </tr>
+      </tfoot>
   </table>
 </div>
 
@@ -66,6 +74,16 @@
   table {
     height: min-content;
     border-collapse: collapse;
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: RGB(var(--main-color));
+    }
+    tfoot {
+      position: sticky;
+      bottom: 0;
+      background-color: RGB(var(--tint-color));
+    }
     td, th {
       padding: 0.5rem 0.75rem;
     }
