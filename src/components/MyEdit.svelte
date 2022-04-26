@@ -6,7 +6,7 @@
   export let categories: Category[] | undefined = undefined;
   export let transactions: Record<string, any>[] | undefined = undefined;
   let filteredTransactions: Record<string, any>[] | undefined;
-
+  let selector
   $: {
     filteredTransactions = transactions;
   }
@@ -16,6 +16,11 @@
     const property = (e.target as HTMLInputElement)?.getAttribute("name")
     const search = (e.target as HTMLInputElement).value
     filteredTransactions = transactions.filter(t => RegExp(search, "i").test(t[property]))
+  }
+  function HandleAddToCategory() {
+    let option = selector.getOption()
+    filteredTransactions.forEach((t, i) => filteredTransactions[i].category = option)
+    transactions = transactions  
   }
 </script>
 
@@ -29,7 +34,7 @@
   <table>
     <thead>
       <tr>
-        <th><MyCategorySelector></MyCategorySelector><button>+</button></th>
+        <th><MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button></th>
         {#each headers ?? [] as h}
           <th>
             <input type="text" name={h} on:input={handleFilterEvent} />
@@ -44,7 +49,7 @@
       </tr>
       {#each filteredTransactions ?? [] as o}
         <tr>
-          <td>{o.category ?? ""}</td>
+          <td><MyCategory value={o.category}/></td>
           {#each headers ?? [] as h}
             <td>{o[h]}</td>
           {/each}
