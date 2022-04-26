@@ -5,6 +5,7 @@
   export let name: string;
   let transactions: Record<string, any>[];
   let headers: string[];
+  let headerTypes: Record<string, "string" | "number">;
   const tab = writable<"upload" | "edit" | "present">("upload");
   let tabValue: "upload" | "edit" | "present";
   tab.subscribe((value) => {
@@ -15,10 +16,13 @@
     event: CustomEvent<{
       transactions: (Record<string, any> & {category?: string})[];
       headers: string[];
+      headerTypes: Record<string, "string" | "number">
     }>
   ) {
     transactions = event.detail.transactions;
     headers = event.detail.headers;
+    headerTypes = event.detail.headerTypes;
+    console.log(headerTypes)
     tab.set("edit");
   }
 </script>
@@ -51,7 +55,7 @@
   </header>
   <main>
     {#if tabValue == "upload"}<MyUpload on:upload={uploadHander} />{/if}
-    {#if tabValue == "edit"}<MyEdit {transactions} {headers} />{/if}
+    {#if tabValue == "edit"}<MyEdit {transactions} {headers} {headerTypes} />{/if}
     {#if tabValue == "present"}<div>Present</div>{/if}
   </main>
 </div>

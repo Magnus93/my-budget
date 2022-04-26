@@ -5,6 +5,7 @@
   export let headers: string[] | undefined = undefined;
   export let categories: Category[] | undefined = undefined;
   export let transactions: Record<string, any>[] | undefined = undefined;
+  export let headerTypes: Record<string, "string" | "number"> | undefined = undefined;
   let filteredTransactions: Record<string, any>[] | undefined;
   let selector
   $: {
@@ -34,7 +35,11 @@
   <table>
     <thead>
       <tr>
-        <th><MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button></th>
+        <th>
+          <div>
+            <MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button>
+          </div>
+        </th>
         {#each headers ?? [] as h}
           <th>
             <input type="text" name={h} on:input={handleFilterEvent} />
@@ -44,15 +49,15 @@
       <tr>
         <th>Category</th>
         {#each headers ?? [] as h}
-          <th>{h}</th>
+          <th class={headerTypes[h] == "number" ? "right" : "left"}>{h}</th>
         {/each}
       </tr>
     </thead>
-      {#each filteredTransactions ?? [] as o}
+      {#each filteredTransactions ?? [] as t}
         <tr>
-          <td><MyCategory value={o.category}/></td>
+          <td><MyCategory value={t.category}/></td>
           {#each headers ?? [] as h}
-            <td>{o[h]}</td>
+            <td class={headerTypes[h] == "number" ? "right" : "left"}>{t[h]}</td>
           {/each}
         </tr>
       {/each}
@@ -78,6 +83,9 @@
       position: sticky;
       top: 0;
       background-color: RGB(var(--main-color));
+      div {
+        display: flex;
+      }
     }
     tfoot {
       position: sticky;
@@ -86,6 +94,11 @@
     }
     td, th {
       padding: 0.5rem 0.75rem;
+      border-left: 1px solid RGB(var(--tint-color));
+      border-right: 1px solid RGB(var(--tint-color));
+    }
+    .right {
+      text-align: right;
     }
     tr:nth-child(2n) {
       background-color: RGB(var(--shade-color));
