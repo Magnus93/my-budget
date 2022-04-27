@@ -1,12 +1,9 @@
 <script lang="ts">
-  import {Category} from "../model";
+  import {Category, Transaction} from "../model";
   import MyCategorySelector from "./MyCategorySelector.svelte";
   import MyCategory from "./MyCategory.svelte";
-  export let headers: string[] | undefined = undefined;
-  export let categories: Category[] | undefined = undefined;
-  export let transactions: Record<string, any>[] | undefined = undefined;
-  export let headerTypes: Record<string, "string" | "number"> | undefined = undefined;
-  let filteredTransactions: Record<string, any>[] | undefined;
+  export let transactions: Transaction[] | undefined = undefined;
+  let filteredTransactions: Transaction[] | undefined;
   let selector
   $: {
     filteredTransactions = transactions;
@@ -32,45 +29,38 @@
       <MyCategory value={c}></MyCategory>
     {/each}
   </div>
+  <MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button>
   <table>
     <thead>
       <tr>
-        <th>
-          <div>
-            <MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button>
-          </div>
-        </th>
-        {#each headers ?? [] as h}
+        {#each ["category", "description", "amount", "date"] as h}
           <th>
             <input type="text" name={h} on:input={handleFilterEvent} />
           </th>
         {/each}
       </tr>
       <tr>
-        <th>Category</th>
-        {#each headers ?? [] as h}
-          <th class={headerTypes[h] == "number" ? "right" : "left"}>{h}</th>
+        {#each  ["Category", "Description", "Amount", "Date"] as h}
+          <th class={h == "Amount" ? "right" : "left"}>{h}</th>
         {/each}
       </tr>
     </thead>
       {#each filteredTransactions ?? [] as t}
         <tr>
           <td><MyCategory value={t.category}/></td>
-          {#each headers ?? [] as h}
-            <td class={headerTypes[h] == "number" ? "right" : "left"}>{t[h]}</td>
-          {/each}
+          <td>{t.description}</td>
+          <td class="right">{t.amount}</td>
+          <td class="center">{t.date}</td>
         </tr>
       {/each}
       <tfoot>
         <tr>
           <td></td>
-          {#each headers ?? [] as h}
+          <td></td>
             <td>
-              {#if headerTypes[h] == "number"}
-                {filteredTransactions.reduce((r, c) => r + (typeof c[h] == "number" ? +c[h] : 0), 0)}
-              {/if}
+              {filteredTransactions.reduce((r, c) => (r + c.amount), 0)}
             </td>
-          {/each}
+          <td></td>
         </tr>
       </tfoot>
   </table>
@@ -103,6 +93,9 @@
     }
     .right {
       text-align: right;
+    }
+    .center {
+      text-align: center;
     }
     tr:nth-child(2n) {
       background-color: RGB(var(--shade-color));
