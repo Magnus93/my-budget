@@ -33,11 +33,10 @@
   <table>
     <thead>
       <tr>
-        {#each ["category", "description", "amount", "date"] as h}
-          <th>
-            <input type="text" name={h} on:input={handleFilterEvent} />
-          </th>
-        {/each}
+        <th></th>
+        <input type="text" name="description" on:input={handleFilterEvent} />
+        <th></th>
+        <th></th>
       </tr>
       <tr>
         {#each  ["Category", "Description", "Amount", "Date"] as h}
