@@ -2,8 +2,10 @@
   import {Category, Transaction} from "../model";
   import MyCategorySelector from "./MyCategorySelector.svelte";
   import MyCategory from "./MyCategory.svelte";
+import MyTextHighlight from "./MyTextHighlight.svelte";
   export let transactions: Transaction[] | undefined = undefined;
   let filteredTransactions: Transaction[] | undefined;
+  let search
   let selector
   $: {
     filteredTransactions = transactions;
@@ -12,7 +14,7 @@
   function handleFilterEvent(e: Event) {
     console.log(e.target)
     const property = (e.target as HTMLInputElement)?.getAttribute("name")
-    const search = (e.target as HTMLInputElement).value
+    search = (e.target as HTMLInputElement).value
     filteredTransactions = transactions.filter(t => RegExp(search, "i").test(t[property]))
   }
   function HandleAddToCategory() {
@@ -24,17 +26,18 @@
 
 <div>
   <h2>Edit Transactions</h2>
+  <input type="text" name="description" on:input={handleFilterEvent} placeholder="Filter transactions..." />
+  <MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button>
   <div class="categories">
     {#each Category.types as c}
       <MyCategory value={c}></MyCategory>
     {/each}
   </div>
-  <MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button>
   <table>
     <thead>
       <tr>
         <th></th>
-        <input type="text" name="description" on:input={handleFilterEvent} />
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -47,7 +50,7 @@
       {#each filteredTransactions ?? [] as t}
         <tr>
           <td><MyCategory value={t.category}/></td>
-          <td>{t.description}</td>
+          <td><MyTextHighlight text={t.description} {search} /></td>
           <td class="right">{t.amount}</td>
           <td class="center">{t.date}</td>
         </tr>
@@ -66,8 +69,8 @@
 </div>
 
 <style type="text/scss">
-  input[type=text] {
-    width: 100%;
+  input[type=text][name=description] {
+    max-width: 40em;
   }
   table {
     height: min-content;

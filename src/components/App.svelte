@@ -67,7 +67,7 @@
     justify-content: space-around;
   }
   main {
-    padding: 1em;
+    padding: 0 1em;
     margin: 0 auto;
   }
   header {
