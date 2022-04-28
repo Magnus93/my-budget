@@ -3,9 +3,9 @@
   import MyCategory from "./MyCategory.svelte";
   import MyTextHighlight from "./MyTextHighlight.svelte";
   export let transactions: Transaction[] | undefined = undefined;
+  
   let filteredTransactions: Transaction[] | undefined;
   let search
-  let selector
   $: {
     filteredTransactions = transactions;
   }
