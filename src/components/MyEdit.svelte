@@ -1,8 +1,7 @@
 <script lang="ts">
   import {Category, Transaction} from "../model";
-  import MyCategorySelector from "./MyCategorySelector.svelte";
   import MyCategory from "./MyCategory.svelte";
-import MyTextHighlight from "./MyTextHighlight.svelte";
+  import MyTextHighlight from "./MyTextHighlight.svelte";
   export let transactions: Transaction[] | undefined = undefined;
   let filteredTransactions: Transaction[] | undefined;
   let search
@@ -17,30 +16,27 @@ import MyTextHighlight from "./MyTextHighlight.svelte";
     search = (e.target as HTMLInputElement).value
     filteredTransactions = transactions.filter(t => RegExp(search, "i").test(t[property]))
   }
-  function HandleAddToCategory() {
-    let option = selector.getOption()
-    filteredTransactions.forEach((t, i) => filteredTransactions[i].category = option)
-    transactions = transactions  
+  function addToCategory(e: MouseEvent) {
+    const category = (e.target as HTMLElement).getAttribute("name")
+    if (Category.is(category))
+      categorize(category)
+  }
+  function categorize(category: Category) {
+    filteredTransactions.forEach((t, i) => filteredTransactions[i].category = category)
+    transactions = transactions
   }
 </script>
 
 <div>
   <h2>Edit Transactions</h2>
   <input type="text" name="description" on:input={handleFilterEvent} placeholder="Filter transactions..." />
-  <MyCategorySelector bind:this={selector}></MyCategorySelector><button on:click={HandleAddToCategory}>+</button>
   <div class="categories">
     {#each Category.types as c}
-      <MyCategory value={c}></MyCategory>
+      <MyCategory value={c} on:click={addToCategory}></MyCategory>
     {/each}
   </div>
   <table>
     <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
       <tr>
         {#each  ["Category", "Description", "Amount", "Date"] as h}
           <th class={h == "Amount" ? "right" : "left"}>{h}</th>
@@ -51,7 +47,7 @@ import MyTextHighlight from "./MyTextHighlight.svelte";
         <tr>
           <td><MyCategory value={t.category}/></td>
           <td><MyTextHighlight text={t.description} {search} /></td>
-          <td class="right">{t.amount}</td>
+          <td class="right">{t.amount.toFixed(2)}</td>
           <td class="center">{t.date}</td>
         </tr>
       {/each}
@@ -60,7 +56,7 @@ import MyTextHighlight from "./MyTextHighlight.svelte";
           <td></td>
           <td></td>
             <td>
-              {filteredTransactions.reduce((r, c) => (r + c.amount), 0)}
+              {filteredTransactions.reduce((r, c) => (r + c.amount), 0).toFixed(2)}
             </td>
           <td></td>
         </tr>
@@ -89,7 +85,7 @@ import MyTextHighlight from "./MyTextHighlight.svelte";
       background-color: RGB(var(--tint-color));
     }
     td, th {
-      padding: 0.5rem 0.75rem;
+      padding: 0.5rem 1rem;
       border-left: 1px solid RGB(var(--tint-color));
       border-right: 1px solid RGB(var(--tint-color));
     }
