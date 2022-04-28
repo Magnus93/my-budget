@@ -2,10 +2,38 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "private": true,
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "tsconfig.test.json"
+      }
+    },
+    "transform": {
+      "^.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!(cloud-http|cryptly|authly|isoly|gracely|@payfunc|asn1js)/.*)"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "((\\.|/)(test|spec))(\\.|\\/.+)(jsx?|tsx?)$",
+    "testPathIgnorePatterns": [
+      "node_modules/",
+      "dist/"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/node_modules/**",
+      "!**/dist/**"
+    ],
+    "preset": "ts-jest",
+    "testMatch": null
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
+    "test": "jest --maxWorkers=2",
+    "test:watch": "watch jest",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
@@ -13,8 +41,12 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.3.2",
     "@tsconfig/svelte": "^2.0.0",
+    "@types/jest": "^26",
     "node-sass": "^7.0.1",
     "rollup": "^2.3.4",
+    "babel-jest": "^26.0.1",
+    "jest": "^26",
+    "ts-jest": "^26.1.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",

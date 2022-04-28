@@ -12,13 +12,17 @@ export interface Filter {
 export namespace Filter {
   export function apply(filter: Filter, transactions: Transaction[]): Transaction[] {
     return transactions.filter(t => {
-      return (!(filter.category?.length > 0) || filter.category.includes(t.category)) &&
+      let keep = true
+      if (filter.category && filter.category.length > 0)
+        keep &&= filter.category.includes(t.category)
+      return keep
+        /* return (!((filter.category?.length ?? 0) > 0) || filter.category.includes(t.category)) &&
       ((!(typeof filter.description == "string" && filter.description != "")) || RegExp(filter.description, "i").test(t.description)) &&
       ((!(filter.description instanceof RegExp)) || ((filter.description.lastIndex = 0) && filter.description.test(t.description))) &&
       ((!(typeof filter.amount?.$gte == "number")) && filter.amount.$gte <= t.amount) &&
       ((!(typeof filter.amount?.$lte == "number")) && filter.amount.$lte >= t.amount) &&
       ((!Date.is(filter.date?.$gte)) && filter.date.$gte <= t.date) &&
-      ((!Date.is(filter.date?.$lte)) && filter.date.$lte >= t.date)
+      ((!Date.is(filter.date?.$lte)) && filter.date.$lte >= t.date) */
     })
   }
 }
