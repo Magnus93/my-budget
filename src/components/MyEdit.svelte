@@ -2,6 +2,9 @@
   import {Category, Transaction} from "../model";
 import { Filter } from "../model/Filter";
   import MyCategory from "./MyCategory.svelte";
+  import HtmlPopup from "./HtmlPopup/index.svelte";
+  import HtmlAmountOptions from "./HtmlAmountOptions.svelte";
+  import HtmlDateOptions from "./HtmlDateOptions.svelte";
   import MyTextHighlight from "./MyTextHighlight.svelte";
   export let transactions: Transaction[] | undefined = undefined;
   let filter: Filter = {}
@@ -40,9 +43,10 @@ import { Filter } from "../model/Filter";
   <table>
     <thead>
       <tr>
-        {#each  ["Category", "Description", "Amount", "Date"] as h}
-          <th class={h == "Amount" ? "right" : "left"}>{h}</th>
-        {/each}
+        <th><div>category<HtmlPopup /></div></th>
+        <th><div>description<HtmlPopup /></div></th>
+        <th class="left"><div>amount<HtmlPopup ><div slot="content"><HtmlAmountOptions/></div></HtmlPopup></div></th>
+        <th><div>date<HtmlPopup ><div slot="content"><HtmlDateOptions/></div></HtmlPopup></div></th>
       </tr>
     </thead>
       {#each filteredTransactions ?? [] as t}
@@ -80,6 +84,8 @@ import { Filter } from "../model/Filter";
       background-color: RGB(var(--main-color));
       div {
         display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     }
     tfoot {
@@ -87,8 +93,14 @@ import { Filter } from "../model/Filter";
       bottom: 0;
       background-color: RGB(var(--tint-color));
     }
+    th {
+      text-transform: capitalize;
+      & > div {
+        display: flex;
+      }
+    }
     td, th {
-      padding: 0.5rem 1rem;
+      padding: 0.5em 1em;
       border-left: 1px solid RGB(var(--tint-color));
       border-right: 1px solid RGB(var(--tint-color));
     }
@@ -98,7 +110,7 @@ import { Filter } from "../model/Filter";
     .center {
       text-align: center;
     }
-    tr:nth-child(2n) {
+    tr:nth-child(2n+1) {
       background-color: RGB(var(--shade-color));
     }
     tr:not(:first-child):hover {
