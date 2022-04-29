@@ -1,20 +1,22 @@
 <script lang="ts">
   import {Category, Transaction} from "../model";
+import { Filter } from "../model/Filter";
   import MyCategory from "./MyCategory.svelte";
   import MyTextHighlight from "./MyTextHighlight.svelte";
   export let transactions: Transaction[] | undefined = undefined;
+  let filter: Filter = {}
   
   let filteredTransactions: Transaction[] | undefined;
-  let search
+  let search: string
   $: {
-    filteredTransactions = transactions;
+    filteredTransactions = runFilter(filter, transactions ?? []);
   }
-
+  function runFilter(f: Filter, t: Transaction[]): Transaction[] {
+    return Filter.apply(f, t)
+  }
   function handleFilterEvent(e: Event) {
-    console.log(e.target)
-    const property = (e.target as HTMLInputElement)?.getAttribute("name")
     search = (e.target as HTMLInputElement).value
-    filteredTransactions = transactions.filter(t => RegExp(search, "i").test(t[property]))
+    filter.description = search
   }
   function addToCategory(e: MouseEvent) {
     const category = (e.target as HTMLElement).getAttribute("name")
@@ -71,6 +73,7 @@
   table {
     height: min-content;
     border-collapse: collapse;
+    font-size: 1.3rem;
     thead {
       position: sticky;
       top: 0;

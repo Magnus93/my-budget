@@ -5,8 +5,8 @@ import type { Transaction } from "./Transaction"
 export interface Filter {
   category?: (Category | undefined)[]
   description?: string | RegExp
-  amount?: {$gte?: number, $lte?: number}
-  date?: {$gte?: Date, $lte?: Date}
+  amount?: {gte?: number, lte?: number}
+  date?: {gte?: Date, lte?: Date}
 }
 
 export namespace Filter {
@@ -21,14 +21,14 @@ export namespace Filter {
         filter.description.lastIndex = 0
         keep &&= filter.description.test(t.description)
       }
-      if (keep && filter.amount && typeof filter.amount.$gte == "number")
-        keep &&= filter.amount.$gte <= t.amount
-      if (keep && filter.amount && typeof filter.amount.$lte == "number")
-        keep &&= filter.amount.$lte >= t.amount
-      if (keep && filter.date && Date.is(filter.date?.$gte))
-        keep &&= filter.date.$gte <= t.date
-      if (keep && filter.date && Date.is(filter.date?.$lte))
-        keep &&= filter.date.$lte >= t.date
+      if (keep && filter.amount && typeof filter.amount.gte == "number")
+        keep &&= filter.amount.gte <= t.amount
+      if (keep && filter.amount && typeof filter.amount.lte == "number")
+        keep &&= filter.amount.lte >= t.amount
+      if (keep && filter.date && Date.is(filter.date?.gte))
+        keep &&= filter.date.gte <= t.date
+      if (keep && filter.date && Date.is(filter.date?.lte))
+        keep &&= filter.date.lte >= t.date
       return keep
         /* return (!((filter.category?.length ?? 0) > 0) || filter.category.includes(t.category)) &&
       ((!(typeof filter.description == "string" && filter.description != "")) || RegExp(filter.description, "i").test(t.description)) &&
