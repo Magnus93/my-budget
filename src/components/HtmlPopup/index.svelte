@@ -25,13 +25,6 @@
       return cssVariables;
     }
   }
-  // function handleDetailClickEvent(e) {
-  //   console.log(e.target)
-  //   const boundingBox = contentElement.getBoundingClientRect()
-  //   console.log(boundingBox)
-  //   console.log(boundingBox.right, window.innerWidth)
-  //   startFrom = boundingBox.right >= window.innerWidth ? "right" : "left"
-  // }
 </script>
 
 <details bind:this={detailElement} style={toStyle(cssVariables)}>
