@@ -60,7 +60,7 @@
         <tr>
           <td></td>
           <td></td>
-            <td>
+            <td class="left">
               {filteredTransactions.reduce((r, c) => (r + c.amount), 0).toFixed(2)}
             </td>
           <td></td>
@@ -80,7 +80,7 @@
     thead {
       position: sticky;
       top: 0;
-      background-color: RGB(var(--main-color));
+      background-color: RGB(var(--shade-color));
       div {
         display: flex;
         justify-content: space-between;
@@ -92,14 +92,16 @@
       bottom: 0;
     }
     tfoot > tr > td {
-      background-color: RGB(var(--tint-color));
+      background-color: RGB(var(--shade-color));
       position: relative;
       &:before {
         content: "";
         position: absolute;
         width: 100%;
         height: 1px;
-        background-color: red;
+        background-color: RGB(var(--tint-color));
+        top: 0;
+        left: 0;
       }
     }
     th {
@@ -118,9 +120,6 @@
     }
     .center {
       text-align: center;
-    }
-    tr:nth-child(2n+1) {
-      background-color: RGB(var(--shade-color));
     }
     tr:not(:first-child):hover {
       background-color: RGB(var(--hover-color));
