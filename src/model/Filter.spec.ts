@@ -1,5 +1,5 @@
 import { Filter } from "./Filter"
-import { Transaction } from "./Transaction"
+import type { Transaction } from "./Transaction"
 
 describe("Filter", () => {
   let trans: Transaction[] = [

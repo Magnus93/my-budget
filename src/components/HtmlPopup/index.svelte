@@ -1,18 +1,28 @@
 <script lang="ts">
-  let detailElement: HTMLDetailsElement
-  let contentElement: HTMLDivElement
-  let startFrom: "left" | "right"
+  import { toStyle } from "../../model";
+  let detailElement: HTMLDetailsElement;
+  let summaryElement: HTMLElement;
+  let contentElement: HTMLDivElement;
+  let cssVariables: { "--left"?: string };
   $: {
-    setDetailEvents(detailElement)
+    cssVariables = setDetailEvents(detailElement);
   }
   function setDetailEvents(element) {
-    console.log(element)
-    if(element instanceof HTMLDetailsElement){
+    console.log(element);
+    if (element instanceof HTMLDetailsElement) {
       element.addEventListener("toggle", () => {
-        const boundingBox = contentElement.getBoundingClientRect()
-        console.log(boundingBox.right, window.innerWidth)
-        startFrom = boundingBox.right >= window.innerWidth ? "right" : "left"
-      })
+        const box = contentElement.getBoundingClientRect();
+        if (box.right != 0 && box.left != 0) {
+          const parent = summaryElement.getBoundingClientRect();
+          if (parent.left+(parent.width+box.width)/2 > window.innerWidth) // Too far right
+            cssVariables = { "--left": `calc(${(window.innerWidth-(parent.left+box.width)).toFixed(0)}px - 1rem)`}
+          else if (parent.left-(parent.width+box.width)/2 < 0) // Too far left
+            cssVariables = { "--left": `calc(${(-parent.left).toFixed(0)}px + 1rem)`}
+          else // Centered
+            cssVariables = {"--left": `${((parent.width - box.width) / 2).toFixed(0)}px`};
+        }
+      });
+      return cssVariables;
     }
   }
   // function handleDetailClickEvent(e) {
@@ -24,11 +34,14 @@
   // }
 </script>
 
-<details bind:this={detailElement}>
-  <summary><slot name="button">⋮</slot></summary>
-  <div class="background" on:click={() => detailElement.open = false}></div>
-  <div class="popup-container" >
-    <div class="popup" bind:this={contentElement} start-from={startFrom ?? "left"}>
+<details bind:this={detailElement} style={toStyle(cssVariables)}>
+  <summary bind:this={summaryElement}><slot name="button">⋮</slot></summary>
+  <div class="background" on:click={() => (detailElement.open = false)} />
+  <div class="popup-container">
+    <div
+      class="popup"
+      bind:this={contentElement}
+    >
       <slot name="content">Popup-Slot</slot>
     </div>
   </div>
@@ -56,7 +69,8 @@
   }
   .popup-container {
     position: relative;
-    &::before, &:after {
+    &::before,
+    &:after {
       position: absolute;
       border: var(--top) solid transparent;
       height: 0;
@@ -78,12 +92,11 @@
       top: var(--top);
       border: 1px solid RGB(var(--tint-color));
       background-color: RGB(var(--shade-color));
-      &[start-from="right"] {
-        right: 0;
-      }
+      left: var(--left);
     }
   }
-  details[open] > summary, summary:hover {
+  details[open] > summary,
+  summary:hover {
     background-color: RGB(var(--hover-color));
   }
 </style>
