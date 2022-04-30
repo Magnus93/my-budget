@@ -72,19 +72,19 @@
     }
     &::before {
       content: "";
-      border-bottom-color: RGB(var(--tint-color));
+      border-bottom-color: RGB(var(--text-color));
       bottom: calc(-1 * var(--top));
     }
     &::after {
       content: "";
-      border-bottom-color: RGB(var(--shade-color));
+      border-bottom-color: RGB(var(--main-color));
       bottom: calc(-1 * var(--top) - 2px);
     }
     & > .popup {
       position: absolute;
       top: var(--top);
-      border: 1px solid RGB(var(--tint-color));
-      background-color: RGB(var(--shade-color));
+      border: 1px solid RGB(var(--text-color));
+      background-color: RGB(var(--main-color));
       left: var(--left);
     }
   }

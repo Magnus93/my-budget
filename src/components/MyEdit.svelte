@@ -2,6 +2,7 @@
   import {Category, Transaction, Filter} from "../model";
   import MyCategory from "./MyCategory.svelte";
   import HtmlPopup from "./HtmlPopup/index.svelte";
+  import HtmlCategoryOptions from "./HtmlCategoryOptions.svelte";
   import HtmlAmountOptions from "./HtmlAmountOptions.svelte";
   import HtmlDateOptions from "./HtmlDateOptions.svelte";
   import MyTextHighlight from "./MyTextHighlight.svelte";
@@ -35,14 +36,14 @@
   <h2>Edit Transactions</h2>
   <input type="text" name="description" on:input={handleFilterEvent} placeholder="Filter transactions..." />
   <div class="categories">
-    {#each Category.types as c}
+    {#each [...Category.types, undefined] as c}
       <MyCategory value={c} on:click={addToCategory}></MyCategory>
     {/each}
   </div>
   <table>
     <thead>
       <tr>
-        <th><div>category<HtmlPopup><div slot="content"><HtmlAmountOptions/></div></HtmlPopup></div></th>
+        <th><div>category<HtmlPopup><div slot="content"><HtmlCategoryOptions {filter}/></div></HtmlPopup></div></th>
         <th><div>description<HtmlPopup /></div></th>
         <th class="left"><div>amount<HtmlPopup ><div slot="content"><HtmlAmountOptions/></div></HtmlPopup></div></th>
         <th><div>date<HtmlPopup ><div slot="content"><HtmlDateOptions/></div></HtmlPopup></div></th>
