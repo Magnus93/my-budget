@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { Transaction } from "../model"
+  import { Filter, Transaction, categorize } from "../model"
   const dispatch = createEventDispatcher<{upload: {transactions: Transaction[]}}>();
   let csv: string;
   let transactions: Transaction[];
@@ -12,7 +12,8 @@
     reader.onload = (e) => {
       e.target.result;
       csv = e.target.result as string;
-      transactions = Transaction.fromCsv(csv, ";") // csvToObject(csv, ";");
+      transactions = Transaction.fromCsv(csv, ";");
+      categorize(Filter.preFilters, transactions)
       dispatch("upload", {transactions})
     };
     reader.readAsText(files[0]);

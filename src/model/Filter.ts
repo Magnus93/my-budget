@@ -39,4 +39,12 @@ export namespace Filter {
       ((!Date.is(filter.date?.$lte)) && filter.date.$lte >= t.date) */
     })
   }
+  export const preFilters: {filter: Filter, category: Category}[] = [
+    {filter: {description: /(willys|multimat|ica|livs|togkassen|grossen|lidl|prisma|orinthus|supermarket)/i}, category: "groceries"},
+    {filter: {description: /(max |forno|bageri)/i}, category: "resturant"},
+    {filter: {description: /(apot)/i}, category: "health"},
+    {filter: {description: /(plantagen|blom)/i}, category: "hobby"},
+    {filter: {description: /(spotify|netflix|hbo)/i}, category: "subscriptions"},
+    {filter: {description: /(preem|clas ?ohlson)/i}, category: "misc"},
+  ]
 }

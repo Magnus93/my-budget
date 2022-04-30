@@ -1,6 +1,5 @@
 <script lang="ts">
-  import {Category, Transaction} from "../model";
-import { Filter } from "../model/Filter";
+  import {Category, Transaction, Filter} from "../model";
   import MyCategory from "./MyCategory.svelte";
   import HtmlPopup from "./HtmlPopup/index.svelte";
   import HtmlAmountOptions from "./HtmlAmountOptions.svelte";
@@ -91,7 +90,17 @@ import { Filter } from "../model/Filter";
     tfoot {
       position: sticky;
       bottom: 0;
+    }
+    tfoot > tr > td {
       background-color: RGB(var(--tint-color));
+      position: relative;
+      &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background-color: red;
+      }
     }
     th {
       text-transform: capitalize;

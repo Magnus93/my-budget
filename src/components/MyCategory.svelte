@@ -8,6 +8,8 @@
       resturant: "red",
       health: "green",
       furniture: "purple",
+      hobby: "orange",
+      subscriptions: "olive",
       misc: "teal",
     }[value]
   }
@@ -17,14 +19,12 @@
 
 <style lang="scss">
   span {
-    font-size: 1.2rem;
     text-transform: capitalize;
     display: inline-block;
     color: RGBA(var(--text-color), 0.7);
   }
   span:hover {
     color: RGB(var(--text-color));
-
     outline: 2px solid RGB(var(--text-color));
   }
   .category {
@@ -41,6 +41,9 @@
   }
   .orange {
     background-color: #7e4f19;
+  }
+  .olive {
+    background-color: #747e19;
   }
   .green {
     background-color: #28761f;
