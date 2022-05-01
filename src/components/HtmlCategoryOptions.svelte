@@ -1,7 +1,5 @@
 <script lang="ts">
-import { query_selector_all } from "svelte/internal";
-
-  import { Category, Filter, Common } from "../model";
+  import { Category, Common } from "../model";
   let options: Record<string, boolean> = Object.fromEntries(
     [...Category.types, "undefined"].map((c) => [c, false])
   );
@@ -78,10 +76,6 @@ import { query_selector_all } from "svelte/internal";
 </div>
 
 <style lang="scss">
-  fieldset {
-    margin: 0.5rem 0;
-    border-color: transparent;
-  }
   div.category {
     display: flex;
     align-items: baseline;

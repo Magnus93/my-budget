@@ -19,6 +19,11 @@ html, body {
 	box-sizing: border-box;
 }
 
+fieldset {
+  margin: 0.5rem 0;
+  border-color: transparent;
+}
+
 a {
 	color: rgb(0,100,200);
 	text-decoration: none;
