@@ -46,5 +46,7 @@ export namespace Filter {
     {filter: {description: /(plantagen|blom)/i}, category: "hobby"},
     {filter: {description: /(spotify|netflix|hbo)/i}, category: "subscriptions"},
     {filter: {description: /(preem|clas ?ohlson)/i}, category: "misc"},
+    {filter: {description: /(ikea)/i}, category: "household"},
+    {filter: {description: /(ikea)/i, amount: {gte: 200, lte: 300}}, category: "resturant"},
   ]
 }

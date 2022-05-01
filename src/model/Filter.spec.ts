@@ -3,7 +3,7 @@ import type { Transaction } from "./Transaction"
 
 describe("Filter", () => {
   let trans: Transaction[] = [
-    {category: "furniture", description: "IKEA", amount: 30, date: "2022-03-01"},
+    {category: "household", description: "IKEA", amount: 30, date: "2022-03-01"},
     {category: "health", description: "Ica Maxi", amount: 10, date: "2022-02-01"},
     {category: "health", description: "Willys Store", amount: 40, date: "2022-05-01"},
     {description: "Ica Maxi", amount: 20, date: "2022-06-01"},

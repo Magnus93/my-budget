@@ -78,7 +78,7 @@ button:focus {
 .category.health {
   background-color: #28761f;
 }
-.category.furniture {
+.category.household {
   background-color: #6c1f76;
 }
 .category.hobby {
@@ -87,6 +87,9 @@ button:focus {
 .category.subscriptions {
   background-color: #747e19;
 }
+.category.transport {
+	background-color: #197e51;
+  }
 .category.misc {
   background-color: #1f7276;
 }
