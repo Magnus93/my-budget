@@ -64,30 +64,38 @@
   <table>
     <thead>
       <tr>
-        <th
-          ><div>
-            category<HtmlPopup
-              ><div slot="content"><HtmlCategoryOptions /></div></HtmlPopup
-            >
-          </div></th
-        >
-        <th><div>description<HtmlPopup /></div></th>
-        <th class="left"
-          ><div>
-            amount<HtmlPopup
-              ><div slot="content"><HtmlAmountOptions /></div></HtmlPopup
-            >
-          </div></th
-        >
-        <th
-          ><div>
-            date<HtmlPopup
-              ><div slot="content">
+        <th>
+          <div>
+            category
+            <HtmlPopup>
+              <div slot="content"><HtmlCategoryOptions /></div>
+            </HtmlPopup>
+          </div>
+        </th>
+        <th>
+          <div>
+            description
+            <HtmlPopup />
+          </div>
+        </th>
+        <th class="left">
+          <div>
+            amount
+            <HtmlPopup>
+              <div slot="content"><HtmlAmountOptions /></div>
+            </HtmlPopup>
+          </div>
+        </th>
+        <th>
+          <div>
+            date
+            <HtmlPopup>
+              <div slot="content">
                 <HtmlDateOptions dateRange={getDateRange(transactions)} />
-              </div></HtmlPopup
-            >
-          </div></th
-        >
+              </div>
+            </HtmlPopup>
+          </div>
+        </th>
       </tr>
     </thead>
     {#each filteredTransactions ?? [] as t}
