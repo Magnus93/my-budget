@@ -1,28 +1,49 @@
 <script lang="ts">
-  import {Category, Filter} from "../model"
-  import { createEventDispatcher } from 'svelte';
-  export let filter: Filter
-  let options: Record<string, boolean> = Object.fromEntries([...Category.types, "undefined"].map(c => [c, false]))
-  let selectedOptions: string[] | undefined
-  function handleSelect(e: Event) {
-    let name = (e.target as HTMLInputElement).name
-    let checked = (e.target as HTMLInputElement).checked
-    if (name == "all") {
-      let allChecked = Object.values(options).reduce((r, c) => r && c, true)
-      allChecked
+import { query_selector_all } from "svelte/internal";
 
-    } else {
-      options[name] = checked
-      console.log(name, options[name])
+  import { Category, Filter, Common } from "../model";
+  let options: Record<string, boolean> = Object.fromEntries(
+    [...Category.types, "undefined"].map((c) => [c, false])
+  );
+
+  function setAll(value: boolean) {
+    Object.keys(options).forEach(k => {
+      options[k] = value
+    })
+  }
+  function areAllTrue(): boolean {
+    return Object.values(options).reduce((r, c) => r && c, true)
+  }
+  function areAllFalse(): boolean {
+    return !Object.values(options).reduce((r, c) => r || c, false)
+  }
+
+  function handleSelect(e: Event) {
+    let name = (e.target as HTMLInputElement).name;
+    let checked = (e.target as HTMLInputElement).checked;
+    if (name == "all") 
+      setAll(!areAllTrue()) 
+    else {
+      options[name] = checked;
+      console.log(name, options[name]);
     }
-    let noneChecked = !Object.values(options).reduce((r, c) => {
-      console.log(c)
-      return r || c
-    }, false)
-    filter.category = noneChecked ? undefined : Object.entries(options).reduce((r: (Category | undefined)[], c) => {
-      let cat: string = c[0]
-      return c[1] ? [...r, (Category.is(cat) ? cat : undefined)] : r
-    }, [])
+    if (areAllFalse())
+      Common.filter.update((value) => {
+        delete value.category;
+        return value;
+      });
+    else
+      Common.filter.update((value) => ({
+        ...value,
+        category: Object.entries(options).reduce(
+          (r: (Category | undefined)[], c) => {
+            let cat: string = c[0];
+            console.log("Add cat", c[1], Category.is(cat), cat)
+            return c[1] ? [...r, Category.is(cat) ? cat : undefined] : r;
+          },
+          []
+        ),
+      }));
   }
 </script>
 

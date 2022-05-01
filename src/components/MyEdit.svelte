@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {Category, Transaction, Filter} from "../model";
+  import {Category, Transaction, Filter, Common} from "../model";
   import MyCategory from "./MyCategory.svelte";
   import HtmlPopup from "./HtmlPopup/index.svelte";
   import HtmlCategoryOptions from "./HtmlCategoryOptions.svelte";
@@ -7,19 +7,25 @@
   import HtmlDateOptions from "./HtmlDateOptions.svelte";
   import MyTextHighlight from "./MyTextHighlight.svelte";
   export let transactions: Transaction[] | undefined = undefined;
-  let filter: Filter = {}
+  let filterValue: Filter = {}
   
+  Common.filter.subscribe((value) => {
+    filterValue = value
+    console.log("Updated!", value.category)
+    // filteredTransactions = runFilter(filterValue, transactions ?? [])
+  })
+
   let filteredTransactions: Transaction[] | undefined;
   let search: string
   $: {
-    filteredTransactions = runFilter(filter, transactions ?? []);
+    filteredTransactions = runFilter(filterValue, transactions ?? []);
   }
   function runFilter(f: Filter, t: Transaction[]): Transaction[] {
     return Filter.apply(f, t)
   }
   function handleFilterEvent(e: Event) {
     search = (e.target as HTMLInputElement).value
-    filter.description = search
+    Common.filter.update((value) => ({...value, description: search}))
   }
   function addToCategory(e: MouseEvent) {
     const category = (e.target as HTMLElement).getAttribute("name")
@@ -43,7 +49,7 @@
   <table>
     <thead>
       <tr>
-        <th><div>category<HtmlPopup><div slot="content"><HtmlCategoryOptions {filter}/></div></HtmlPopup></div></th>
+        <th><div>category<HtmlPopup><div slot="content"><HtmlCategoryOptions /></div></HtmlPopup></div></th>
         <th><div>description<HtmlPopup /></div></th>
         <th class="left"><div>amount<HtmlPopup ><div slot="content"><HtmlAmountOptions/></div></HtmlPopup></div></th>
         <th><div>date<HtmlPopup ><div slot="content"><HtmlDateOptions/></div></HtmlPopup></div></th>
