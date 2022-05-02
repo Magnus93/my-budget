@@ -40,12 +40,13 @@ export namespace Filter {
     })
   }
   export const preFilters: {filter: Filter, category: Category}[] = [
-    {filter: {description: /(willys|multimat|ica|livs|togkassen|grossen|lidl|prisma|orinthus|supermarket)/i}, category: "groceries"},
-    {filter: {description: /(max |forno|bageri)/i}, category: "resturant"},
+    {filter: {description: /(willys|multimat|ica|livs|togkassen|grossen|lidl|prisma|orinthus|supermarket|shahwan tobak|torgkassen|annam)/i}, category: "groceries"},
+    {filter: {description: /(max |forno|bageri|grill|sushi|pizza|landings|burger|taco)/i}, category: "resturant"},
     {filter: {description: /(apot)/i}, category: "health"},
     {filter: {description: /(plantagen|blom)/i}, category: "hobby"},
     {filter: {description: /(spotify|netflix|hbo)/i}, category: "subscriptions"},
-    {filter: {description: /(preem|clas ?ohlson)/i}, category: "misc"},
+    {filter: {description: /(preem|clas ?ohlson|avgift bankkort)/i}, category: "misc"},
+    {filter: {description: /(destination gotland|sj internetbokning|bauhaus|jula)/i}, category: "transport"},
     {filter: {description: /(ikea)/i}, category: "household"},
     {filter: {description: /(ikea)/i, amount: {gte: 200, lte: 300}}, category: "resturant"},
   ]

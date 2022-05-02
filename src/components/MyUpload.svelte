@@ -13,6 +13,9 @@
       e.target.result;
       csv = e.target.result as string;
       transactions = Transaction.fromCsv(csv, ";");
+      transactions = transactions.filter(t => t.amount < 0)
+      transactions.forEach(t => t.amount *= -1)
+      transactions = transactions
       categorize(Filter.preFilters, transactions)
       dispatch("upload", {transactions})
     };
