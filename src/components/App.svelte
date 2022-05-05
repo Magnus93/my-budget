@@ -1,6 +1,7 @@
 <script lang="ts">
   import { writable } from "svelte/store";
   import type { Transaction } from "../model";
+  import HtmlPresent from "./HtmlPresent.svelte";
   import MyEdit from "./MyEdit.svelte";
   import MyUpload from "./MyUpload.svelte";
   export let name: string;
@@ -23,7 +24,7 @@
 
 <div id="root">
   <header>
-    <h1>{name+" "}<i>(Magnus and Yash's Budget)</i></h1>
+    <h1>{name + " "}<i>(Magnus and Yash's Budget)</i></h1>
     <nav>
       <ul>
         <li
@@ -50,7 +51,7 @@
   <main>
     {#if tabValue == "upload"}<MyUpload on:upload={uploadHander} />{/if}
     {#if tabValue == "edit"}<MyEdit {transactions} />{/if}
-    {#if tabValue == "present"}<div>Present</div>{/if}
+    {#if tabValue == "present"}<HtmlPresent />{/if}
   </main>
 </div>
 
