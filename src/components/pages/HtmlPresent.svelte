@@ -10,9 +10,13 @@
     max,
   } from "d3";
   let transactions: Record<Category | "undefined", Transaction[]>;
-
   let height = 400;
   let width = window.innerWidth;
+
+  window.addEventListener("resize", () => {
+    width = window.innerWidth
+    drawDefault();
+  })
 
   onMount(() => {
     Common.transactions.subscribe((value) => {
@@ -35,7 +39,15 @@
           undefined: [],
         }
       );
-      drawBarChart(
+      drawDefault()
+    });
+  });
+  function clearChart() {
+    select("svg").selectAll("*").remove()
+  }
+  function drawDefault() {
+    clearChart();
+    drawBarChart(
         Object.entries(transactions).map((entry) => {
           const c = entry[0];
           const t = entry[1];
@@ -46,8 +58,7 @@
           return { name: c as Category | "undefined", value: amount };
         })
       );
-    });
-  });
+  }
   function drawBarChart(
     data: { name: Category | "undefined"; value: number }[]
   ) {
