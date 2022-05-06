@@ -1,20 +1,22 @@
 <script lang="ts">
-  import { Category, Transaction, Filter, Common } from "../model";
-  import MyCategory from "./MyCategory.svelte";
-  import HtmlPopup from "./HtmlPopup/index.svelte";
-  import HtmlCategoryOptions from "./HtmlCategoryOptions.svelte";
-  import HtmlAmountOptions from "./HtmlAmountOptions.svelte";
-  import HtmlDateOptions from "./HtmlDateOptions.svelte";
-  import MyTextHighlight from "./MyTextHighlight.svelte";
+  import { Category, Transaction, Filter, Common } from "../../model";
+  import HtmlCategory from "../HtmlCategory.svelte";
+  import HtmlPopup from "../HtmlPopup.svelte";
+  import HtmlCategoryOptions from "../HtmlCategoryOptions.svelte";
+  import HtmlAmountOptions from "../HtmlAmountOptions.svelte";
+  import HtmlDateOptions from "../HtmlDateOptions.svelte";
+  import HtmlTextHighlight from "../HtmlTextHighlight.svelte";
   import type { DateRange } from "isoly";
-  export let transactions: Transaction[] | undefined = undefined;
+  let transactions: Transaction[] | undefined = undefined;
   let filterValue: Filter = {};
 
   Common.filter.subscribe((value) => {
     filterValue = value;
-    console.log("Updated!", value.category);
     // filteredTransactions = runFilter(filterValue, transactions ?? [])
   });
+  Common.transactions.subscribe((value) => {
+    transactions = value
+  })
 
   let filteredTransactions: Transaction[] | undefined;
   let search: string;
@@ -58,7 +60,7 @@
   />
   <div class="categories">
     {#each [...Category.types, undefined] as c}
-      <MyCategory value={c} on:click={addToCategory} />
+      <HtmlCategory value={c} on:click={addToCategory} />
     {/each}
   </div>
   <table>
@@ -100,8 +102,8 @@
     </thead>
     {#each filteredTransactions ?? [] as t}
       <tr>
-        <td><MyCategory value={t.category} /></td>
-        <td><MyTextHighlight text={t.description} {search} /></td>
+        <td><HtmlCategory value={t.category} /></td>
+        <td><HtmlTextHighlight text={t.description} {search} /></td>
         <td class="right">{t.amount.toFixed(2)}</td>
         <td class="center">{t.date}</td>
       </tr>

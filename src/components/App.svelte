@@ -1,25 +1,21 @@
 <script lang="ts">
   import { writable } from "svelte/store";
-  import type { Transaction } from "../model";
-  import HtmlPresent from "./HtmlPresent.svelte";
-  import MyEdit from "./MyEdit.svelte";
-  import MyUpload from "./MyUpload.svelte";
+  import { Common, Transaction } from "../model";
+  import HtmlPresent from "./pages/HtmlPresent.svelte";
+  import HtmlEdit from "./pages/HtmlEdit.svelte";
+  import HtmlUpload from "./pages/HtmlUpload.svelte";
   export let name: string;
   let transactions: Transaction[];
   const tab = writable<"upload" | "edit" | "present">("upload");
   let tabValue: "upload" | "edit" | "present";
   tab.subscribe((value) => {
     tabValue = value;
-    console.log;
   });
-  function uploadHander(
-    event: CustomEvent<{
-      transactions: Transaction[];
-    }>
-  ) {
-    transactions = event.detail.transactions;
-    tab.set("edit");
-  }
+  Common.transactions.subscribe((value) => {
+    transactions = value
+    if (value.length > 0)
+      tab.set("edit")
+  })
 </script>
 
 <div id="root">
@@ -49,8 +45,8 @@
     </nav>
   </header>
   <main>
-    {#if tabValue == "upload"}<MyUpload on:upload={uploadHander} />{/if}
-    {#if tabValue == "edit"}<MyEdit {transactions} />{/if}
+    {#if tabValue == "upload"}<HtmlUpload />{/if}
+    {#if tabValue == "edit"}<HtmlEdit />{/if}
     {#if tabValue == "present"}<HtmlPresent />{/if}
   </main>
 </div>

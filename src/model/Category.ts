@@ -1,5 +1,5 @@
 
-export type Category = "groceries" | "resturant" | "health" | "household" | "hobby" | "subscriptions" | "transport" | "misc"
+export type Category = typeof Category.types[number]
 export namespace Category {
   export const types = ["groceries", "resturant", "health", "household", "hobby", "subscriptions", "transport", "misc"] as const
   export function is(value: Category | any): value is Category {

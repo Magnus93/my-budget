@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  import { Filter, Transaction, categorize } from "../model"
-  const dispatch = createEventDispatcher<{upload: {transactions: Transaction[]}}>();
+  import { Filter, Transaction, categorize, Common } from "../../model"
   let csv: string;
   let transactions: Transaction[];
 
@@ -17,7 +15,7 @@
       transactions.forEach(t => t.amount *= -1)
       transactions = transactions
       categorize(Filter.preFilters, transactions)
-      dispatch("upload", {transactions})
+      Common.transactions.set(transactions)
     };
     reader.readAsText(files[0]);
   }

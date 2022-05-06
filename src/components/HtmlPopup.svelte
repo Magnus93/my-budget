@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toStyle } from "../../model";
+  import { toStyle } from "../model";
   let detailElement: HTMLDetailsElement;
   let summaryElement: HTMLElement;
   let contentElement: HTMLDivElement;
