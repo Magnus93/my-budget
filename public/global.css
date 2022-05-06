@@ -78,25 +78,33 @@ button:focus {
 
 .category.groceries {
   background-color: #1f3076;
+  fill: #1f3076;
 }
 .category.resturant {
   background-color: #761f1f;
+  fill: #761f1f;
 }
 .category.health {
   background-color: #28761f;
+  fill: #28761f;
 }
 .category.household {
   background-color: #6c1f76;
+  fill: #6c1f76;
 }
 .category.hobby {
   background-color: #7e4f19;
+  fill: #7e4f19;
 }
 .category.subscriptions {
   background-color: #747e19;
+  fill: #747e19;
 }
 .category.transport {
 	background-color: #197e51;
+	fill: #197e51;
   }
 .category.misc {
   background-color: #1f7276;
+  fill: #1f7276;
 }

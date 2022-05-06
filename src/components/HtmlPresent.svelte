@@ -8,19 +8,23 @@
     scaleLinear,
     max,
   } from "d3";
+
+  let height = 400;
+  let width = 800;
+
   onMount(() => {
     let data = [
       { name: "A", value: 0.08167 },
       { name: "B", value: 0.01492 },
       { name: "C", value: 0.02782 },
       { name: "D", value: 0.04253 },
-      { name: "E", value: 0.12702 },
-      { name: "F", value: 0.02288 },
-      { name: "G", value: 0.02015 },
-      { name: "H", value: 0.06094 },
-      { name: "I", value: 0.06966 },
-      { name: "J", value: 0.00153 },
-      { name: "K", value: 0.00772 },
+      { name: "E", value: 0.12702, color: "#00ff00" },
+      { name: "F", value: 0.02288, class: "groceries" },
+      { name: "G", value: 0.02015, class: "health" },
+      { name: "H", value: 0.06094, class: "misc" },
+      { name: "I", value: 0.06966, class: "resturant" },
+      { name: "J", value: 0.00153, class: "hobby" },
+      { name: "K", value: 0.00772, class: "subscriptions" },
       { name: "L", value: 0.04025 },
       { name: "M", value: 0.02406 },
       { name: "N", value: 0.06749 },
@@ -37,8 +41,6 @@
       { name: "Y", value: 0.01974 },
       { name: "Z", value: 0.00074 },
     ];
-    let height = 400;
-    let width = 550;
     let margin = { top: 20, right: 20, bottom: 20, left: 20 };
 
     let x = scaleBand()
@@ -63,6 +65,8 @@
     g.selectAll("rect")
       .data(data)
       .join("rect")
+      .attr("fill", (d) => d.color ?? undefined)
+      .attr("class", (d) => (d.class ?? "") + " category")
       .attr("x", (d) => x(d.name))
       .attr("y", (d) => y(d.value))
       .attr("height", (d) => y(0) - y(d.value))
@@ -74,4 +78,4 @@
   });
 </script>
 
-<svg height="450" width="600" />
+<svg {height} {width} />
