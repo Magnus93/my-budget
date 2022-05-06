@@ -2,21 +2,22 @@
   import { onMount } from "svelte";
   import { Category, Transaction, Filter, Common } from "../../model";
   import {
-    scaleBand,
     select,
     axisBottom,
     axisLeft,
     scaleLinear,
     max,
+    scaleBand,
+    ScaleBand,
   } from "d3";
   let transactions: Record<Category | "undefined", Transaction[]>;
   let height = 400;
   let width = window.innerWidth;
 
   window.addEventListener("resize", () => {
-    width = window.innerWidth
+    width = window.innerWidth;
     drawDefault();
-  })
+  });
 
   onMount(() => {
     Common.transactions.subscribe((value) => {
@@ -39,25 +40,25 @@
           undefined: [],
         }
       );
-      drawDefault()
+      drawDefault();
     });
   });
   function clearChart() {
-    select("svg").selectAll("*").remove()
+    select("svg").selectAll("*").remove();
   }
   function drawDefault() {
     clearChart();
     drawBarChart(
-        Object.entries(transactions).map((entry) => {
-          const c = entry[0];
-          const t = entry[1];
-          const amount: number = t.reduce(
-            (r: number, b: Transaction) => r + b.amount,
-            0
-          );
-          return { name: c as Category | "undefined", value: amount };
-        })
-      );
+      Object.entries(transactions).map((entry) => {
+        const c = entry[0];
+        const t = entry[1];
+        const amount: number = t.reduce(
+          (r: number, b: Transaction) => r + b.amount,
+          0
+        );
+        return { name: c as Category | "undefined", value: amount };
+      })
+    );
   }
   function drawBarChart(
     data: { name: Category | "undefined"; value: number }[]
@@ -72,14 +73,21 @@
       .domain([0, max(data, (d) => d.value)])
       .range([height - margin.bottom, margin.top]);
     let svg = select("svg");
-
-    let g = svg.append("g").attr("fill", "orange");
-
+    updateBars(svg, data, margin, x, y);
+    updateLabels(svg, data, margin, x, y);
+  }
+  function updateBars(
+    svg,
+    data: { name: Category | "undefined"; value: number }[],
+    margin: { top: number; left: number; bottom: number; right: number },
+    x: ScaleBand<string>,
+    y
+  ) {
+    let g = svg.append("g").attr("fill", "grey");
     let xAxis = (g) =>
       g
         .attr("transform", `translate(0,${height - margin.bottom})`)
         .call(axisBottom(x));
-
     let yAxis = (g) =>
       g.attr("transform", `translate(${margin.left},0)`).call(axisLeft(y));
 
@@ -94,6 +102,15 @@
       .attr("width", x.bandwidth());
     svg.append("g").call(xAxis);
     svg.append("g").call(yAxis);
+  }
+  function updateLabels(svg, data, margin, x, y) {
+    let g = svg.append("g").attr("fill", "white");
+    g.selectAll("rect")
+      .data(data)
+      .join("text")
+      .text((d) => `${d.value.toFixed(2)}`)
+      .attr("x", (d) => x(d.name))
+      .attr("y", (d) => y(d.value) + 16);
   }
 </script>
 
