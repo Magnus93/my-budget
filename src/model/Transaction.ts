@@ -16,6 +16,9 @@ export namespace Transaction {
       typeof value.amount == "number" && 
       Date.is(value.date)
   }
+  export function sum(transactions: Transaction[]): number {
+    return transactions.reduce((r, t) => r + t.amount ,0)
+  }
   export function fromCsv(
     csv: string, 
     divider=",", 

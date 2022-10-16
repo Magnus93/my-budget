@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Category, Transaction, Filter, Common } from "../../model";
+  import { Category, Transaction, Common, MonthGroup } from "../../model";
   import {
     select,
     axisBottom,
@@ -13,6 +13,7 @@
   let transactions: Record<Category | "undefined", Transaction[]>;
   let height = 400;
   let width = window.innerWidth;
+  let byMonth: MonthGroup
 
   window.addEventListener("resize", () => {
     width = window.innerWidth;
@@ -21,6 +22,8 @@
 
   onMount(() => {
     Common.transactions.subscribe((value) => {
+      byMonth = MonthGroup.create(value)
+      console.log(byMonth)
       transactions = value.reduce(
         (r, c) => {
           return {
