@@ -112,7 +112,7 @@
       <tr>
         <td />
         <td />
-        <td class="left">
+        <td class="right">
           {filteredTransactions.reduce((r, c) => r + c.amount, 0).toFixed(2)}
         </td>
         <td>
